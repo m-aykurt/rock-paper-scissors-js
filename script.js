@@ -15,63 +15,55 @@ if (localStorage.getItem("scores") == "0,0") {
 if (scoresFromLocalStorage) {
   highScore = parseInt(scoresFromLocalStorage[0]);
   scoreAfter = parseInt(scoresFromLocalStorage[1]);
-  highScoreEl.textContent = "High score: " + highScore;
+  highScoreEl.textContent = `High Score:  ${highScore}`;
   document.getElementById("player-score").innerText = scoreAfter;
 }
 
 // Function to generate random choices
 const choices = ["Rock", "Paper", "Scissors"];
 
-function getComputerChoice(choices) {
+const getComputerChoice = (choices) => {
   return choices[Math.floor(Math.random() * choices.length)];
-}
-// console.log(getComputerChoice(choices));
+};
 
 // To set score to zero on loading
-function setZero() {
+const setZero = () => {
   document.getElementById("player-score").innerText = "0";
-}
+};
 
 // Function for changing scores after every click
-function getResult(playerChoice, computerChoice) {
+
+const getResult = (playerChoice, computerChoice) => {
   scoreBefore = document.getElementById("player-score").innerText;
-  if (playerChoice == "Rock") {
-    if (computerChoice == "Rock") {
-      //do nothing if tie
-    } else if (computerChoice == "Paper") {
-      document.getElementById("player-score").innerText--;
-    } else {
+  const playerAndComp = playerChoice + computerChoice;
+  switch (playerAndComp) {
+    case "RockScissors":
+    case "PaperRock":
+    case "ScissorsPaper":
       document.getElementById("player-score").innerText++;
-    }
+      break;
+    case "RockPaper":
+    case "PaperScissors":
+    case "ScissorsRock":
+      document.getElementById("player-score").innerText--;
+      break;
+    case "RockPaper":
+    case "PaperScissors":
+    case "ScissorsRock":
+      break;
+
+    default:
+      break;
   }
 
-  if (playerChoice == "Scissors") {
-    if (computerChoice == "Rock") {
-      document.getElementById("player-score").innerText--;
-    } else if (computerChoice == "Paper") {
-      document.getElementById("player-score").innerText++;
-    } else {
-      //do nothing if tie
-    }
-  }
-
-  if (playerChoice == "Paper") {
-    if (computerChoice == "Rock") {
-      document.getElementById("player-score").innerText++;
-    } else if (computerChoice == "Paper") {
-      //do nothing if tie
-    } else {
-      document.getElementById("player-score").innerText--;
-    }
-  }
   scoreAfter = parseInt(document.getElementById("player-score").innerText);
   return scoreBefore, scoreAfter;
-}
+};
 
 let finalresult = document.getElementById("result").innerText;
 
 // Function for displaying player and computer choices
-function showResult(scoreBefore, scoreAfter, playerChoice, computerChoice) {
+const showResult = (scoreBefore, scoreAfter, playerChoice, computerChoice) => {
   document.getElementById("hands").innerText;
   if (playerChoice == "Rock") {
     displayMove = "✊";
@@ -93,7 +85,7 @@ function showResult(scoreBefore, scoreAfter, playerChoice, computerChoice) {
   if (parseInt(scoreAfter) > highScore) {
     highScore = scoreAfter; // Updating high scores
     scores[0] = highScore;
-    highScoreEl.textContent = "High score: " + highScore;
+    highScoreEl.textContent = `High Score:  ${highScore}`;
   }
   scores[1] = scoreAfter;
   scores[0] = highScore;
@@ -110,17 +102,16 @@ function showResult(scoreBefore, scoreAfter, playerChoice, computerChoice) {
     document.getElementById("result").style.color = "yellow";
     document.getElementById("result").innerText = "Draw";
   }
-}
-
-function onClickRPS(playerChoice) {
+};
+const onClickRPS = (playerChoice) => {
   computerChoice = getComputerChoice(choices);
   getResult(playerChoice, computerChoice);
 
   showResult(scoreBefore, scoreAfter, playerChoice, computerChoice);
-}
+};
 
 // Function to play game using R, P and S keys on keyboard
-function playGame() {
+const playGame = () => {
   document.addEventListener("keydown", (e) => {
     switch (e.key) {
       case "r":
@@ -154,25 +145,25 @@ function playGame() {
         onClickRPS(rpsButton.value);
       })
   );
-}
+};
 
 // End Game function to reset score to zero and keeps high score same
-function endGame() {
+const endGame = () => {
   scores[0] = highScore;
   scores[1] = scoreAfter;
   localStorage.setItem("scores", JSON.stringify(scores));
-  highScoreEl.textContent = "High score: " + highScore;
+  highScoreEl.textContent = `High Score:  ${highScore}`;
   const endGameButton = document.getElementById("endGameButton");
   endGameButton.onclick = () => {
     scoreAfter = 0;
     scores[1] = scoreAfter;
     localStorage.setItem("scores", JSON.stringify(scores));
-    highScoreEl.textContent = "High score: " + highScore;
+    highScoreEl.textContent = `High Score:  ${highScore}`;
     document.getElementById("player-score").innerText = scoreAfter;
     document.getElementById("result").innerText = "";
     document.getElementById("hands").innerText = "";
   };
-}
+};
 
 // Reset Game function to reset score and high score to zero
 
@@ -184,7 +175,7 @@ function resetGame() {
     scores[0] = highScore;
     scores[1] = scoreAfter;
     localStorage.setItem("scores", JSON.stringify(scores));
-    highScoreEl.textContent = "High score: " + highScore;
+    highScoreEl.textContent = `High Score:  ${highScore}`;
     document.getElementById("player-score").innerText = scoreAfter;
     document.getElementById("result").innerText = "";
     document.getElementById("hands").innerText = "";
