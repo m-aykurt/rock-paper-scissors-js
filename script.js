@@ -1,10 +1,16 @@
 // Declaring all variables
-let scores = [0, 0]; // [highScore, currentScore]
 let highScoreEl = document.getElementById("highScore");
+let scores = [0, 0];
 let highScore = 0;
 let scoreAfter = 0;
 let displayMove = "";
 let scoresFromLocalStorage;
+
+const choices = ["Rock", "Paper", "Scissors"];
+
+const getComputerChoice = (choices) => {
+  return choices[Math.floor(Math.random() * choices.length)];
+};
 
 if (localStorage.getItem("scores") == "0,0") {
   scoresFromLocalStorage = null;
@@ -19,13 +25,6 @@ if (scoresFromLocalStorage) {
   document.getElementById("player-score").innerText = scoreAfter;
 }
 
-// Function to generate random choices
-const choices = ["Rock", "Paper", "Scissors"];
-
-const getComputerChoice = (choices) => {
-  return choices[Math.floor(Math.random() * choices.length)];
-};
-
 // Function for sounds on button click
 function playSound(e) {
   if (e == "_gameover2") var audio = new Audio("sounds/" + e + ".wav");
@@ -37,12 +36,9 @@ function playSound(e) {
   audio.play();
 }
 
-// To set score to zero on loading
 const setZero = () => {
   document.getElementById("player-score").innerText = "0";
 };
-
-// Function for changing scores after every click
 
 const getResult = (playerChoice, computerChoice) => {
   scoreBefore = document.getElementById("player-score").innerText;
@@ -73,7 +69,6 @@ const getResult = (playerChoice, computerChoice) => {
 
 let finalresult = document.getElementById("result").innerText;
 
-// Function for displaying player and computer choices
 const showResult = (scoreBefore, scoreAfter, playerChoice, computerChoice) => {
   document.getElementById("hands").innerText;
   if (playerChoice == "Rock") {
@@ -124,7 +119,7 @@ const onClickRPS = (playerChoice) => {
   showResult(scoreBefore, scoreAfter, playerChoice, computerChoice);
 };
 
-// Function to play game using R, P and S keys on keyboard
+// Function to play on keyboard
 const playGame = () => {
   document.addEventListener("keydown", (e) => {
     switch (e.key) {
@@ -161,7 +156,7 @@ const playGame = () => {
   );
 };
 
-// End Game function to reset score to zero and keeps high score same
+// End Game
 const endGame = () => {
   scores[0] = highScore;
   scores[1] = scoreAfter;
@@ -181,7 +176,7 @@ const endGame = () => {
   };
 };
 
-// Reset Game function to reset score and high score to zero
+// Reset Game
 
 function resetGame() {
   const resetButton = document.getElementById("resetButton");
@@ -200,7 +195,7 @@ function resetGame() {
   };
 }
 
-// Calling out functions which are not attached to buttons
+// Calling the functions
 playGame();
 endGame();
 resetGame();
