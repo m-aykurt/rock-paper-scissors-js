@@ -26,6 +26,17 @@ const getComputerChoice = (choices) => {
   return choices[Math.floor(Math.random() * choices.length)];
 };
 
+// Function for sounds on button click
+function playSound(e) {
+  if (e == "_gameover2") var audio = new Audio("sounds/" + e + ".wav");
+  if (e == "Win3") var audio = new Audio("sounds/" + e + ".wav");
+  if (e == "Draw2") var audio = new Audio("sounds/" + e + ".wav");
+  if (e == "tada") var audio = new Audio("sounds/" + e + ".wav");
+  if (e == "reset") var audio = new Audio("sounds/" + e + ".wav");
+
+  audio.play();
+}
+
 // To set score to zero on loading
 const setZero = () => {
   document.getElementById("player-score").innerText = "0";
@@ -94,12 +105,15 @@ const showResult = (scoreBefore, scoreAfter, playerChoice, computerChoice) => {
   // Changing result's colors and playing sounds based on Win, Draw or Lose
   if (parseInt(scoreBefore) > parseInt(scoreAfter)) {
     document.getElementById("result").style.color = "red";
+    playSound("_gameover2");
     document.getElementById("result").innerText = "You Lose!";
   } else if (parseInt(scoreBefore) < parseInt(scoreAfter)) {
     document.getElementById("result").style.color = "green";
+    playSound("Win3");
     document.getElementById("result").innerText = "You Won!";
   } else {
     document.getElementById("result").style.color = "yellow";
+    playSound("Draw2");
     document.getElementById("result").innerText = "Draw";
   }
 };
@@ -154,7 +168,9 @@ const endGame = () => {
   localStorage.setItem("scores", JSON.stringify(scores));
   highScoreEl.textContent = `High Score:  ${highScore}`;
   const endGameButton = document.getElementById("endGameButton");
+
   endGameButton.onclick = () => {
+    playSound("tada");
     scoreAfter = 0;
     scores[1] = scoreAfter;
     localStorage.setItem("scores", JSON.stringify(scores));
@@ -169,7 +185,9 @@ const endGame = () => {
 
 function resetGame() {
   const resetButton = document.getElementById("resetButton");
+
   resetButton.onclick = () => {
+    playSound("reset");
     highScore = 0;
     scoreAfter = 0;
     scores[0] = highScore;
