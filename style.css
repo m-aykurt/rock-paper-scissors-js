@@ -14,6 +14,9 @@ body {
   background-position: center center;
   background-size: cover;
 }
+svg * {
+  fill: white;
+}
 
 #heading {
   padding-top: 40px;
@@ -193,6 +196,12 @@ body {
 
 .newButton a:active {
   color: #fff;
+}
+
+.allow-sound-area {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
 }
 
 /* for responsive  */
