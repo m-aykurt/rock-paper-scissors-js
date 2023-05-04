@@ -1,4 +1,4 @@
-// Declaring all variables
+// Declaring variables
 let highScoreEl = document.getElementById("highScore");
 let scores = [0, 0];
 let highScore = 0;
